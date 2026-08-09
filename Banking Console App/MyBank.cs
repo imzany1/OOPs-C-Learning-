@@ -1,6 +1,19 @@
 public class MyBank
 {
+    private readonly IAccountFactory _factory;
+
+    public MyBank(IAccountFactory factory)
+    {
+        _factory = factory;
+    }
+
     public static void Main(string[] args)
+    {
+        var bank = new MyBank(new AccountFactory());
+        bank.Run();
+    }
+
+    public void Run()
     {
         Console.WriteLine("What type of account? Enter 1 for Savings, 2 for Fixed Deposit");
         int accountType = int.Parse(Console.ReadLine()!);
@@ -8,7 +21,7 @@ public class MyBank
         Console.WriteLine("Enter initial deposit amount: ");
         decimal initialBalance = decimal.Parse(Console.ReadLine()!);
 
-        BaseAccount Hussain = (accountType == 1) ? new SavingsAccount(initialBalance) : new FixedDepositAccount(initialBalance);
+        BaseAccount Hussain = _factory.CreateAccount(accountType, initialBalance);
         bool running = true;
         while(running == true)
         {

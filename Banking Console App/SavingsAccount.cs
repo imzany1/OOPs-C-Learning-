@@ -1,6 +1,6 @@
 public class SavingsAccount: BaseAccount, IWithdrawable
 {
-    public SavingsAccount(decimal InitialBalance): base(InitialBalance){ InterestRate = 0.005833M; }
+    public SavingsAccount(decimal InitialBalance): base(InitialBalance){ InterestRate = 0.01M; }
     public SavingsAccount(): this(0){}
     public IWithdrawable Withdraw(decimal Amount)
     {

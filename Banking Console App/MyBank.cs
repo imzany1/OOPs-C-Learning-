@@ -9,26 +9,31 @@ public class MyBank
         decimal initialBalance = decimal.Parse(Console.ReadLine()!);
 
         BaseAccount Hussain = (accountType == 1) ? new SavingsAccount(initialBalance) : new FixedDepositAccount(initialBalance);
-
-        Console.WriteLine("Input 1 to Check Account Balance \nInput 2 to deposit cash \nInput 3 to withdraw cash. \nInput 4 to check after some months(Interest)");
+        bool running = true;
+        while(running == true)
+        {
+            DisplayMenu();
+        }
+        void DisplayMenu(){
+        Console.WriteLine("Input 1 to Check Account Balance\nInput 2 to deposit cash\nInput 3 to withdraw cash.\nInput 4 to check after some months(Interest)\nInput 5 to Exit");
         int choice = int.Parse(Console.ReadLine()!);
 
         switch (choice)
         {
             case 1:
-                Console.WriteLine(Hussain.GetBalance());
+                Console.WriteLine($"Current Account Balance: {Hussain.GetBalance()} \n\n");
                 break;
             case 2:
                 Console.WriteLine("Enter the amount you want to deposit: ");
                 decimal amount = decimal.Parse(Console.ReadLine()!);
-                Console.WriteLine(Hussain.Deposit(amount).GetBalance());
+                Console.WriteLine($"Current Account Balance: {Hussain.Deposit(amount).GetBalance()} \n\n");
                 break;
             case 3:
                 if (Hussain is IWithdrawable withdrawable)
                 {
                     Console.WriteLine("Enter the amount you want to withdraw: ");
                     decimal withdrawAmount = decimal.Parse(Console.ReadLine()!);
-                    Console.WriteLine(withdrawable.Withdraw(withdrawAmount).GetBalance());
+                    Console.WriteLine($"Current Account Balance: {withdrawable.Withdraw(withdrawAmount).GetBalance()}\n\n");
                 }
                 else
                 {
@@ -38,11 +43,15 @@ public class MyBank
             case 4:
                 Console.WriteLine("How many months later are you checking?");
                 decimal Months = decimal.Parse(Console.ReadLine()!);
-                Console.WriteLine(Hussain.Interest(Months).GetBalance());
+                Console.WriteLine($"Interest after {Months} months is: {Hussain.Interest(Months).GetBalance()}\n\n");
+                break;
+            case 5:
+                running = false;
                 break;
             default:
                 Console.WriteLine("Please look at the menu!");
                 break;
+        }
         }
     }
 }
